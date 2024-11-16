@@ -30,10 +30,12 @@ public class Ressource {
     private String name;
     private String description;
     private Integer quantity;
-    private BigDecimal price;
-    private String id_owner;
-    private Integer nomber_usage;
-    private boolean is_transferable;
+    private BigDecimal buying_price;
+    private BigDecimal selling_price;
+    private UUID id_owner;
+    private Integer number_usage;
+    private boolean transferable;
+    private Integer max_reservation;
     @OneToMany(mappedBy="ressource")
     private List<Image> images;
 }

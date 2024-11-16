@@ -20,6 +20,5 @@ public class Image {
     private Long id;
     private String path;
     @ManyToOne
-    // @JoinColumn(name="id_ressour", nullable=false)
     private Ressource ressource;
 }
