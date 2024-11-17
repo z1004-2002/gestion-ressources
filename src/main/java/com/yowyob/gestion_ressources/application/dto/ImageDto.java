@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class ImageDto {
     private Long id;
     private String name;
-    private String path;
     private Long size;
 	private String fileType;
 }

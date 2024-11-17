@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,28 +19,33 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.yowyob.gestion_ressources.application.dto.ImageDto;
-import com.yowyob.gestion_ressources.config.metrics.FileStorageProperties;
 import com.yowyob.gestion_ressources.domain.model.Image;
 import com.yowyob.gestion_ressources.domain.model.Ressource;
 import com.yowyob.gestion_ressources.infrastructure.persistence.repository.ImageRepository;
 import com.yowyob.gestion_ressources.infrastructure.persistence.repository.RessourceRepository;
 
+import lombok.NoArgsConstructor;
+
 
 @Service
+@NoArgsConstructor
 public class ImageService {
+    @Autowired
     private ImageRepository imageRepository;
+    @Autowired
     private RessourceRepository ressourceRepository;
+    
     private Path fileStorageLocationProduct;
     private String dir = "/src/main/resources/image";
 
+    @Autowired(required=true)
     public ImageService(
             ImageRepository fileRepository,
-            FileStorageProperties fileStorageProperties,
             RessourceRepository ressourceRepository) {
         super();
         this.ressourceRepository = ressourceRepository;
         this.fileStorageLocationProduct = Paths
-                .get(dir + fileStorageProperties.getProductDir()).toAbsolutePath()
+                .get(System.getProperty("user.dir")+dir).toAbsolutePath()
                 .normalize();
         this.ressourceRepository = ressourceRepository;
 
@@ -115,7 +121,6 @@ public class ImageService {
     private ImageDto imageToImageDto(Image image) {
         return ImageDto.builder()
                 .id(image.getId())
-                .path(image.getPath())
                 .name(image.getName())
                 .size(image.getSize())
                 .fileType(image.getFileType())

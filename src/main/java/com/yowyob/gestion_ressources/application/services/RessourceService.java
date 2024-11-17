@@ -14,10 +14,17 @@ import com.yowyob.gestion_ressources.domain.model.Ressource;
 import com.yowyob.gestion_ressources.domain.services.RessourceFactory;
 import com.yowyob.gestion_ressources.infrastructure.persistence.repository.RessourceRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class RessourceService {
+
     @Autowired
     private RessourceRepository ressourceRepository;
+
     @Autowired
     private ImageService imageServive;
 

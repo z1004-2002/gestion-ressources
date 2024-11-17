@@ -24,6 +24,8 @@ import com.yowyob.gestion_ressources.application.services.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,11 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "Image")
 @CrossOrigin("*")
 @Slf4j
+@NoArgsConstructor
+@AllArgsConstructor
 public class ImageController {
     @Autowired
     private ImageService imageService;
 
-    @PutMapping(path = "/ressource/{ressource_id}/image/add")
+    @PutMapping(path = "/ressource/{ressource_id}/add")
     @Operation(summary = "Charge une liste d'image pour une liste pour une ressource")
     public List<ImageDto> submitImage(@RequestParam("images") MultipartFile[] file, @PathVariable("ressource_id") UUID ressource_id) {
 
