@@ -19,7 +19,7 @@ public class RessourceService {
     @Autowired
     private RessourceRepository ressourceRepository;
     @Autowired
-    private ImageServive imageServive;
+    private ImageService imageServive;
 
     public RessourceResponse createRessource(RessourceRequest request) {
         Ressource ressource = RessourceFactory.create(

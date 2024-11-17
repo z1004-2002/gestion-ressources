@@ -18,8 +18,18 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
                 format_sql: false
+    servlet:
+        multipart:
+            enabled: true
+            file-size-threshold: 2KB
+            max-file-size: 1024MB
+            max-request-size: 1024MB
+
 
 yowyob:
     openapi:
         prod-url: http://localhost:4000
         dev-url: http://localhost:4000
+    
+data:
+    product-dir: /src/main/resources/image

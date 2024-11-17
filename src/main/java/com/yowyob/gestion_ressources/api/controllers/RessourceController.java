@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import org.springframework.http.HttpStatus;
 @RestController
 @RequestMapping(path = "/api/v1/ressource")
 @Tag(name = "Ressource", description = "Endpoints de gestiond des ressources")
+@CrossOrigin("*")
 public class RessourceController {
     @Autowired
     private RessourceService ressourceService;
