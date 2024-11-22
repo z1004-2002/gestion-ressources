@@ -4,16 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yowyob.gestion_ressources.application.dto.RessourceRequest;
 import com.yowyob.gestion_ressources.application.dto.RessourceResponse;
-import com.yowyob.gestion_ressources.application.services.ReservationService;
 import com.yowyob.gestion_ressources.application.services.RessourceService;
 import com.yowyob.gestion_ressources.domain.model.Etat;
-import com.yowyob.gestion_ressources.domain.model.Reservation;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -34,8 +31,6 @@ import org.springframework.http.HttpStatus;
 public class RessourceController {
     @Autowired
     private RessourceService ressourceService;
-    @Autowired
-    private ReservationService reservatoinService;
 
     @Operation(summary = "Créer une ressource", description = "", tags = "CRUD")
     @ResponseStatus(HttpStatus.CREATED)
@@ -114,21 +109,15 @@ public class RessourceController {
     @Operation(summary = "Liste des ressource disponible", description = "", tags = "Actions Suplémentaire")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/available")
-    public List<RessourceResponse>  availableRessource() {
+    public List<RessourceResponse> availableRessource() {
         return ressourceService.availableRessources(Etat.AVAILABLE);
     }
+
     @Operation(summary = "Liste des ressource disponible", description = "", tags = "Actions Suplémentaire")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/available")
-    public List<RessourceResponse>  unavailableRessource() {
+    @GetMapping("/unavailable")
+    public List<RessourceResponse> unavailableRessource() {
         return ressourceService.availableRessources(Etat.UNAVAILABLE);
     }
 
-    @Operation(summary = "Reserver une ressource", description = "", tags = "Reservation")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @PutMapping("/{idRessource}/reserve/{idReserver}")
-    public Reservation reserve(@PathVariable(name = "idRessource") String idRessource,
-            @PathVariable(name = "idReserver") String idReserver, @RequestParam("quantity") Integer quantity) {
-        return reservatoinService.reserveRessource(idRessource, idReserver,quantity);
-    }
 }

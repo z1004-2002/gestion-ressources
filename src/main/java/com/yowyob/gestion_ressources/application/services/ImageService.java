@@ -24,6 +24,7 @@ import com.yowyob.gestion_ressources.infrastructure.persistence.repository.Image
 
 @Service
 public class ImageService {
+    
     @Autowired
     private ImageRepository imageRepository;
 

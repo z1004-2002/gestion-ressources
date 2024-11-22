@@ -4,18 +4,16 @@ server:
         include-message: always
 
 # debug: true
-
 spring:
     application:
         name: template-micro-service
     cassandra:
         local-datacenter: datacenter1
         keyspace-name: gestion_ressources
-        schema-action: recreate
+        schema-action: create_if_not_exists
         request.timeout: 10s
         connection.connect-timeout: 10s
         connection.init-query-timeout: 10s
-        contact-points: 127.0.0.1
         
     servlet:
         multipart:
@@ -24,6 +22,8 @@ spring:
             max-file-size: 1024MB
             max-request-size: 1024MB
 
+main:
+    allow-bean-definition-overriding: true
 
 yowyob:
     openapi:
