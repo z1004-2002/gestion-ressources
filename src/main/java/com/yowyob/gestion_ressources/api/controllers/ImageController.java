@@ -23,17 +23,13 @@ import com.yowyob.gestion_ressources.application.services.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(path = "/api/v1/image", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Image")
+@Tag(name = "Images", description = "gestion des images d'une ressource")
 @CrossOrigin("*")
 @Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
 public class ImageController {
     @Autowired
     private ImageService imageService;

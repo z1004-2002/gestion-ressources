@@ -1,7 +1,6 @@
 package com.yowyob.gestion_ressources.domain.model;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -28,4 +27,5 @@ public class Ressource {
     private Integer number_usage;
     private boolean transferable;
     private Integer max_reservation;
+    private Etat state;
 }

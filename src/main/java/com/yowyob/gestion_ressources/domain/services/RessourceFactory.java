@@ -3,6 +3,7 @@ package com.yowyob.gestion_ressources.domain.services;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.yowyob.gestion_ressources.domain.model.Etat;
 import com.yowyob.gestion_ressources.domain.model.Ressource;
 
 public class RessourceFactory {
@@ -18,6 +19,7 @@ public class RessourceFactory {
                 .id_owner(id_owner)
                 .number_usage(number_usage)
                 .transferable(transferable)
+                .state(Etat.UNAVAILABLE)
                 .max_reservation(max_reservation)
                 .build();
     }

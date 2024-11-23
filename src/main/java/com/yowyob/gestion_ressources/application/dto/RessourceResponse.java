@@ -2,7 +2,8 @@ package com.yowyob.gestion_ressources.application.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
+
+import com.yowyob.gestion_ressources.domain.model.Etat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,6 @@ public class RessourceResponse {
     private Integer number_usage;
     private boolean transferable;
     private Integer max_reservation;
+    private Etat state;
     private List<ImageDto> images;
 }

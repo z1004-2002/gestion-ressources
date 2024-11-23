@@ -1,7 +1,6 @@
 package com.yowyob.gestion_ressources.application.dto;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

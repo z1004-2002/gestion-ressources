@@ -9,16 +9,13 @@ import org.webjars.NotFoundException;
 import com.yowyob.gestion_ressources.application.dto.ImageDto;
 import com.yowyob.gestion_ressources.application.dto.RessourceRequest;
 import com.yowyob.gestion_ressources.application.dto.RessourceResponse;
+import com.yowyob.gestion_ressources.domain.model.Etat;
 import com.yowyob.gestion_ressources.domain.model.Ressource;
 import com.yowyob.gestion_ressources.domain.services.RessourceFactory;
 import com.yowyob.gestion_ressources.infrastructure.persistence.repository.RessourceRepository;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Service
-@NoArgsConstructor
-@AllArgsConstructor
 public class RessourceService {
 
     @Autowired
@@ -59,6 +56,7 @@ public class RessourceService {
                 .number_usage(ressource.getNumber_usage())
                 .transferable(ressource.isTransferable())
                 .max_reservation(ressource.getMax_reservation())
+                .state(ressource.getState())
                 .images(imageDtos)
                 .build();
     }
@@ -104,17 +102,70 @@ public class RessourceService {
                 .number_usage(ressource.getNumber_usage())
                 .transferable(ressource.isTransferable())
                 .max_reservation(ressource.getMax_reservation())
+                .state(ressource.getState())
                 .images(imageServive.getImageByRessource(ressource.getId()))
                 .build();
     }
 
-    public String changeOwner(String idRessource, String idOwner) {
+    public RessourceResponse changeOwner(String idRessource, String idOwner) {
         Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
         if (ressource == null) {
             throw new NotFoundException("No such resource");
         }
         ressource.setId_owner(idOwner);
-        ressourceRepository.save(ressource);
-        return "Propriétaire modifié";
+        return ressourceToRessourceResponse(ressourceRepository.save(ressource));
+    }
+
+    public RessourceResponse enableRessource(String idRessource) {
+        Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
+        if (ressource == null) {
+            throw new NotFoundException("No such resource");
+        }
+        ressource.setState(Etat.AVAILABLE);
+        return ressourceToRessourceResponse(ressourceRepository.save(ressource));
+    }
+
+    public RessourceResponse disableRessource(String idRessource) {
+        Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
+        if (ressource == null) {
+            throw new NotFoundException("No such resource");
+        }
+        ressource.setState(Etat.UNAVAILABLE);
+        return ressourceToRessourceResponse(ressourceRepository.save(ressource));
+    }
+
+    public RessourceResponse commandRessource(String idRessource,int quantity) {
+        Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
+        if (ressource == null) {
+            throw new NotFoundException("No such resource");
+        }
+        if (ressource.getState() == Etat.UNAVAILABLE) {
+            throw new IllegalStateException("Cette ressource est indisponible");
+        }
+        if (quantity > ressource.getQuantity() || quantity < 0) {
+            throw new IllegalStateException("Cette ressource a déjà atteint son maximum de réservations");
+        }
+        ressource.setNumber_usage(ressource.getNumber_usage() + quantity);
+        ressource.setQuantity(ressource.getQuantity()-quantity);
+        return ressourceToRessourceResponse(ressourceRepository.save(ressource));
+    }
+
+    public RessourceResponse cancelCommandRessource(String idRessource, Integer quantity) {
+        Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
+        if (ressource == null) {
+            throw new NotFoundException("No such resource");
+        }
+        ressource.setNumber_usage(ressource.getNumber_usage() - quantity);
+        ressource.setQuantity(ressource.getQuantity()+quantity);
+        return ressourceToRessourceResponse(ressourceRepository.save(ressource));
+    }
+
+    public List<RessourceResponse> availableRessources(Etat available) {
+        return ressourceRepository.findByState(available).stream()
+               .map(this::ressourceToRessourceResponse).toList();
+    }
+    public List<RessourceResponse> unavailableRessources(Etat available) {
+        return ressourceRepository.findByState(available).stream()
+               .map(this::ressourceToRessourceResponse).toList();
     }
 }
