@@ -20,35 +20,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.yowyob.gestion_ressources.application.dto.ImageDto;
 import com.yowyob.gestion_ressources.domain.model.Image;
-import com.yowyob.gestion_ressources.domain.model.Ressource;
 import com.yowyob.gestion_ressources.infrastructure.persistence.repository.ImageRepository;
-import com.yowyob.gestion_ressources.infrastructure.persistence.repository.RessourceRepository;
-
-import lombok.NoArgsConstructor;
-
 
 @Service
-@NoArgsConstructor
 public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
-    @Autowired
-    private RessourceRepository ressourceRepository;
-    
+
     private Path fileStorageLocationProduct;
     private String dir = "/src/main/resources/image";
 
-    @Autowired(required=true)
-    public ImageService(
-            ImageRepository fileRepository,
-            RessourceRepository ressourceRepository) {
+    public ImageService() {
         super();
-        this.ressourceRepository = ressourceRepository;
         this.fileStorageLocationProduct = Paths
-                .get(System.getProperty("user.dir")+dir).toAbsolutePath()
+                .get(System.getProperty("user.dir") + dir).toAbsolutePath()
                 .normalize();
-        this.ressourceRepository = ressourceRepository;
-
         try {
             Files.createDirectories(this.fileStorageLocationProduct);
         } catch (Exception ex) {
@@ -56,17 +42,17 @@ public class ImageService {
         }
     }
 
-    public List<ImageDto> getImageByRessource(UUID id_ressource) {
-        return imageRepository.findByRessource(ressourceRepository.findById(id_ressource).get()).stream()
+    public List<ImageDto> getImageByRessource(String idRessource) {
+        return imageRepository.findByIdRessource(idRessource).stream()
                 .map(this::imageToImageDto)
                 .toList();
     }
 
-    public ImageDto getImageById(Long image_id) {
-        return imageToImageDto(imageRepository.findById(image_id).get());
+    public ImageDto getImageById(String id_image) {
+        return imageToImageDto(imageRepository.findById(id_image).get());
     }
 
-    public ImageDto uploadImage(MultipartFile file, UUID ressource_id) {
+    public ImageDto uploadImage(MultipartFile file, String idRessource) {
 
         // GENERATION OF VARCHAR
 
@@ -93,11 +79,16 @@ public class ImageService {
                     .path(prefix + fileName)
                     .toUriString();
 
-            Ressource r = ressourceRepository.findById(ressource_id).get();
-
             return imageToImageDto(
-                    imageRepository.save(Image.builder().name(prefix + fileName).path(imageDownloadUri).ressource(r)
-                            .size(file.getSize()).fileType(file.getContentType()).build()));
+                    imageRepository.save(
+                            Image.builder()
+                                    .id(UUID.randomUUID().toString())
+                                    .name(prefix + fileName)
+                                    .path(imageDownloadUri)
+                                    .idRessource(idRessource)
+                                    .size(file.getSize())
+                                    .fileType(file.getContentType())
+                                    .build()));
 
         } catch (IOException e) {
             throw new RuntimeException("Could not store file " + prefix + fileName + ". Please try again!", e);
@@ -127,7 +118,7 @@ public class ImageService {
                 .build();
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         imageRepository.deleteById(id);
     }
 

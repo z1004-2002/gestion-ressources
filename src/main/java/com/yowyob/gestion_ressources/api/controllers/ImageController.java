@@ -3,7 +3,6 @@ package com.yowyob.gestion_ressources.api.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,7 +25,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -40,22 +38,22 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
-    @PutMapping(path = "/ressource/{ressource_id}/add")
+    @PutMapping(path = "/ressource/{idRessource}/add")
     @Operation(summary = "Charge une liste d'image pour une liste pour une ressource")
-    public List<ImageDto> submitImage(@RequestParam("images") MultipartFile[] file, @PathVariable("ressource_id") UUID ressource_id) {
+    public List<ImageDto> submitImage(@RequestParam("images") MultipartFile[] file, @PathVariable("idRessource") String idRessource) {
 
         List<ImageDto> images = new ArrayList<>();
 
         for (MultipartFile image : file) {
             log.info("Controller save Image ({})", image);
-            images.add(imageService.uploadImage(image, ressource_id));
+            images.add(imageService.uploadImage(image, idRessource));
         }
         return images;
     }
 
     @GetMapping(path = "/{id}")
 	@Operation(summary = "Récupérer une image par son id")
-	public ImageDto getImageById(@PathVariable("id") Long id) {
+	public ImageDto getImageById(@PathVariable("id") String id) {
 		log.info("Controller: Fetching Image by Id {}", id);
 		return imageService.getImageById(id);
 	}

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageDto {
-    private Long id;
+    private String id;
     private String name;
     private Long size;
 	private String fileType;

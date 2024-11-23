@@ -1,7 +1,6 @@
 package com.yowyob.gestion_ressources.application.services;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class RessourceService {
         return ressourceToRessourceResponse(ressourceRepository.save(ressource));
     }
 
-    public RessourceResponse getOneRessourceById(UUID id) {
+    public RessourceResponse getOneRessourceById(String id) {
         Ressource ressource = ressourceRepository.findById(id).get();
         if (ressource == null) {
             throw new NotFoundException("No such resource");
@@ -68,7 +67,7 @@ public class RessourceService {
         return ressourceRepository.findAll().stream().map(this::ressourceToRessourceResponse).toList();
     }
 
-    public RessourceResponse updateRessource(UUID id, RessourceRequest request) {
+    public RessourceResponse updateRessource(String id, RessourceRequest request) {
         Ressource ressource = ressourceRepository.findById(id).orElse(null);
         if (ressource == null) {
             throw new NotFoundException("No such resource");
@@ -84,7 +83,7 @@ public class RessourceService {
         return ressourceToRessourceResponse(ressourceRepository.save(ressource));
     }
 
-    public String deleteRessource(UUID id) {
+    public String deleteRessource(String id) {
         Ressource ressource = ressourceRepository.findById(id).orElse(null);
         if (ressource == null) {
             throw new NotFoundException("No such resource");
@@ -107,5 +106,15 @@ public class RessourceService {
                 .max_reservation(ressource.getMax_reservation())
                 .images(imageServive.getImageByRessource(ressource.getId()))
                 .build();
+    }
+
+    public String changeOwner(String idRessource, String idOwner) {
+        Ressource ressource = ressourceRepository.findById(idRessource).orElse(null);
+        if (ressource == null) {
+            throw new NotFoundException("No such resource");
+        }
+        ressource.setId_owner(idOwner);
+        ressourceRepository.save(ressource);
+        return "Propriétaire modifié";
     }
 }

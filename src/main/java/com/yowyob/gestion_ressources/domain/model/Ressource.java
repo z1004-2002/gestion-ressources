@@ -1,16 +1,11 @@
 package com.yowyob.gestion_ressources.domain.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,22 +15,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "ressources")
+@Table("ressources")
 public class Ressource {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @PrimaryKey
+    private String id;
     private String name;
     private String description;
     private Integer quantity;
     private BigDecimal buying_price;
     private BigDecimal selling_price;
-    private UUID id_owner;
+    private String id_owner;
     private Integer number_usage;
     private boolean transferable;
     private Integer max_reservation;
-    @OneToMany(mappedBy="ressource")
-    private List<Image> images;
 }

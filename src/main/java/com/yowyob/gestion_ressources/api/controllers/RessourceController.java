@@ -1,7 +1,6 @@
 package com.yowyob.gestion_ressources.api.controllers;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,23 +48,29 @@ public class RessourceController {
 
     @Operation(summary = "Obtenir une ressource", description = "")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/get_one/{id_ressource}")
-    public RessourceResponse getMethodName(@PathVariable(name = "id_ressource") UUID id_ressource) {
-        return ressourceService.getOneRessourceById(id_ressource);
+    @GetMapping("/get_one/{idRessource}")
+    public RessourceResponse getMethodName(@PathVariable(name = "idRessource") String idRessource) {
+        return ressourceService.getOneRessourceById(idRessource);
     }
 
     @Operation(summary = "Mettre à jour une ressource", description = "")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PutMapping("/update/{id_ressource}")
-    public RessourceResponse updateARessource(@PathVariable(name = "id_ressource") UUID id_ressource,
+    @PutMapping("/update/{idRessource}")
+    public RessourceResponse updateARessource(@PathVariable(name = "idRessource") String idRessource,
             @RequestBody RessourceRequest request) {
-        return ressourceService.updateRessource(id_ressource, request);
+        return ressourceService.updateRessource(idRessource, request);
     }
 
     @Operation(summary = "Supprime une ressource", description = "")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @DeleteMapping("/delete/{id_ressource}")
-    public String deleteARessource(@PathVariable(name = "id_ressource") UUID id_ressource) {
-        return ressourceService.deleteRessource(id_ressource);
+    @DeleteMapping("/delete/{idRessource}")
+    public String deleteARessource(@PathVariable(name = "idRessource") String idRessource) {
+        return ressourceService.deleteRessource(idRessource);
+    }
+    @Operation(summary = "Changer de propriétaire", description = "")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/{idRessource}/owner/{idOwner}")
+    public String transfertOwner(@PathVariable(name = "idRessource") String idRessource, @PathVariable(name = "idOwner") String idOwner) {
+        return ressourceService.changeOwner(idRessource,idOwner);
     }
 }
