@@ -27,8 +27,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping(path = "/api/v1/ressource")
-// @Tag(name = "Ressource", description = "Endpoints de gestiond des
-// ressources")
+// @Tag(name = "Ressource", description = "Endpoints de gestiond des ressources")
 @CrossOrigin("*")
 public class RessourceController {
     @Autowired

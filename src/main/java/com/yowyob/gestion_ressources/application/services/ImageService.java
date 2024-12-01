@@ -66,7 +66,7 @@ public class ImageService {
             int index = (int) (str.length() * Math.random());
             s.append(str.charAt(index));
         }
-        prefix = String.valueOf(s);
+        prefix += String.valueOf(s);
 
         // END OF GENERATION
 
