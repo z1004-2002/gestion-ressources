@@ -14,6 +14,8 @@ spring:
         request.timeout: 10s
         connection.connect-timeout: 10s
         connection.init-query-timeout: 10s
+        contact-points: 127.0.0.1
+        port: 9042
         
     servlet:
         multipart:
@@ -29,7 +31,7 @@ yowyob:
     openapi:
         prod-url: http://localhost:4000
         dev-url: http://localhost:4000
-        url: http://localhost:4000
+        url: http://localhost:5000
     
 data:
     product-dir: /src/main/resources/image
