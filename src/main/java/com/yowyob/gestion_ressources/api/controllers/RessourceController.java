@@ -36,7 +36,7 @@ public class RessourceController {
     @Operation(summary = "Créer une ressource", description = "Ce endpoint permet de créer une ressource. Bien vouloir passer la clé dd votre domaine en paramètre", tags = "CRUD")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public RessourceResponse postMethodName(@RequestBody RessourceRequest request, @RequestParam("domainKey") UUID domainKey) {
+    public RessourceResponse postMethodName(@RequestBody RessourceRequest request, @RequestParam("domainKey") String domainKey) {
         return ressourceService.createRessource(request, domainKey);
     }
 
@@ -49,7 +49,7 @@ public class RessourceController {
     @Operation(summary = "Lister toute les ressources une ressource", description = "Bien vouloir passer la clé de votre domaine en paramètre", tags = "CRUD")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/all/domain")
-    public List<RessourceResponse> getAllRessource(@RequestParam("domainKey") UUID domainKey) {
+    public List<RessourceResponse> getAllRessource(@RequestParam("domainKey") String domainKey) {
         return ressourceService.getAllRessources(domainKey);
     }
 
@@ -136,14 +136,14 @@ public class RessourceController {
     @Operation(summary = "Liste des ressource disponible", description = "Ne pas oublier de passer la clé du domain en paramètre", tags = "Actions Suplémentaire")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/available/domain")
-    public List<RessourceResponse> availableRessourceDomain(UUID domainKey) {
+    public List<RessourceResponse> availableRessourceDomain(String domainKey) {
         return ressourceService.availableRessources(Etat.AVAILABLE);
     }
 
     @Operation(summary = "Liste des ressource disponible", description = "Ne pas oublier de passer la clé du domain en paramètre", tags = "Actions Suplémentaire")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/unavailable/domain")
-    public List<RessourceResponse> unavailableRessourceDomain(UUID domainKey) {
+    public List<RessourceResponse> unavailableRessourceDomain(String domainKey) {
         return ressourceService.availableRessources(Etat.UNAVAILABLE);
     }
 }

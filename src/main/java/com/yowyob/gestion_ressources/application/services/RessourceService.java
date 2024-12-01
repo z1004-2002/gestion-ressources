@@ -24,7 +24,7 @@ public class RessourceService {
     @Autowired
     private ImageService imageServive;
 
-    public RessourceResponse createRessource(RessourceRequest request, UUID domainKey) {
+    public RessourceResponse createRessource(RessourceRequest request, String domainKey) {
         Ressource ressource = RessourceFactory.create(request, domainKey);
         return ressourceToRessourceResponse(ressourceRepository.save(ressource));
     }
@@ -56,7 +56,7 @@ public class RessourceService {
         return ressourceRepository.findAll().stream().map(this::ressourceToRessourceResponse).toList();
     }
 
-    public List<RessourceResponse> getAllRessources(UUID domainKey) {
+    public List<RessourceResponse> getAllRessources(String domainKey) {
         return ressourceRepository.findByDomainKey(domainKey.toString()).stream()
                 .map(this::ressourceToRessourceResponse).toList();
     }
@@ -154,12 +154,12 @@ public class RessourceService {
                 .map(this::ressourceToRessourceResponse).toList();
     }
 
-    public List<RessourceResponse> availableRessources(UUID domainKey, Etat available) {
+    public List<RessourceResponse> availableRessources(String domainKey, Etat available) {
         return ressourceRepository.findByState(available).stream()
                 .map(this::ressourceToRessourceResponse).toList();
     }
 
-    public List<RessourceResponse> unavailableRessources(UUID domainKey, Etat unavailable) {
+    public List<RessourceResponse> unavailableRessources(String domainKey, Etat unavailable) {
         return ressourceRepository.findByDomainKeyState(domainKey.toString(), unavailable).stream()
                 .map(this::ressourceToRessourceResponse).toList();
     }

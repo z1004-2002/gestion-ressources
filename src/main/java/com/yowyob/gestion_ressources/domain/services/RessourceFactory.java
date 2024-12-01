@@ -7,7 +7,7 @@ import com.yowyob.gestion_ressources.domain.model.Etat;
 import com.yowyob.gestion_ressources.domain.model.Ressource;
 
 public class RessourceFactory {
-    public static Ressource create(RessourceRequest request, UUID domainKey) {
+    public static Ressource create(RessourceRequest request, String domainKey) {
         return Ressource.builder()
                 .id(UUID.randomUUID().toString())
                 .name(request.getName())
