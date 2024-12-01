@@ -21,6 +21,9 @@ public class OpenAPIConfig {
   @Value("${yowyob.openapi.prod-url}")
   private String prodUrl;
 
+  @Value("${yowyob.openapi.url}")
+  private String UrlAdress;
+
   @Bean
   public OpenAPI myOpenAPI() {
     Server devServer = new Server();
@@ -34,7 +37,7 @@ public class OpenAPIConfig {
     Contact contact = new Contact();
     contact.setEmail("f");
     contact.setName("YowYob");
-    contact.setUrl("https://localhost:4000");
+    contact.setUrl(UrlAdress);
 
     License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 

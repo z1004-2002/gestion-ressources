@@ -20,12 +20,13 @@ public class Ressource {
     private String id;
     private String name;
     private String description;
+    private String domainKey;
     private Integer quantity;
-    private BigDecimal buying_price;
-    private BigDecimal selling_price;
-    private String id_owner;
-    private Integer number_usage;
+    private BigDecimal buyingPrice;
+    private BigDecimal sellingPrice;
+    private String idOwner;
+    private Integer numberUsage;
     private boolean transferable;
-    private Integer max_reservation;
+    private Integer maxReservation;
     private Etat state;
 }

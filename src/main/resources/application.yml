@@ -6,10 +6,10 @@ server:
 # debug: true
 spring:
     application:
-        name: template-micro-service
+        name: gestion-ressources
     cassandra:
         local-datacenter: datacenter1
-        keyspace-name: gestion_ressources
+        keyspace-name: yowyobdb
         schema-action: create_if_not_exists
         request.timeout: 10s
         connection.connect-timeout: 10s
@@ -29,6 +29,7 @@ yowyob:
     openapi:
         prod-url: http://localhost:4000
         dev-url: http://localhost:4000
+        url: http://localhost:4000
     
 data:
     product-dir: /src/main/resources/image

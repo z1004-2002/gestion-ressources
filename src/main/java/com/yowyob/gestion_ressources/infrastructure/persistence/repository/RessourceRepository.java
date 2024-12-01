@@ -13,4 +13,11 @@ import com.yowyob.gestion_ressources.domain.model.Ressource;
 public interface RessourceRepository extends CassandraRepository<Ressource, String> {
     @Query("SELECT * FROM ressources WHERE state = ?0 ALLOW FILTERING")
     List<Ressource> findByState(Etat state);
+    @Query("SELECT * FROM ressources WHERE domainKey = ?0 ALLOW FILTERING")
+    List<Ressource> findByDomainKey(String domainKey);
+    @Query("SELECT * FROM ressources WHERE domainKey = ?0 and state = ?1 ALLOW FILTERING")
+    List<Ressource> findByDomainKeyState(String domainKey, Etat state);
+
+    @Query("SELECT * FROM ressources WHERE idOwner = ?0 ALLOW FILTERING")
+    List<Ressource> findByOwnerId(String idOwner);
 }

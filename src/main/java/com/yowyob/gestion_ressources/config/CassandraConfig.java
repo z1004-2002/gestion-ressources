@@ -10,9 +10,8 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Override
     protected String getKeyspaceName() {
-        return "gestion_ressources";
+        return "yowyobdb";
     }
-
 
     @Override
     public String getContactPoints() {

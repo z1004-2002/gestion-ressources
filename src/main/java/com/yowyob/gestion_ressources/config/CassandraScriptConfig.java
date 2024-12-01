@@ -7,12 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.cassandra.core.cql.CqlTemplate;
 
-@Configuration
+// @Configuration
 public class CassandraScriptConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(CassandraScriptConfig.class);
@@ -25,7 +23,7 @@ public class CassandraScriptConfig {
         this.cqlTemplate = cqlTemplate;
     }
 
-    @Bean
+    // @Bean
     public CommandLineRunner loadCqlScript() {
         return args -> {
             try {

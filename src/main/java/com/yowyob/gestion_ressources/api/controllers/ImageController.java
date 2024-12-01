@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(path = "/api/v1/image", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Images", description = "gestion des images d'une ressource")
+@Tag(name = "Images", description = "Manages images for the resouces")
 @CrossOrigin("*")
 @Slf4j
 public class ImageController {
@@ -35,11 +35,9 @@ public class ImageController {
     private ImageService imageService;
 
     @PutMapping(path = "/ressource/{idRessource}/add")
-    @Operation(summary = "Charge une liste d'image pour une liste pour une ressource")
+    @Operation(summary = "Get a list of Id for a ressource")
     public List<ImageDto> submitImage(@RequestParam("images") MultipartFile[] file, @PathVariable("idRessource") String idRessource) {
-
         List<ImageDto> images = new ArrayList<>();
-
         for (MultipartFile image : file) {
             log.info("Controller save Image ({})", image);
             images.add(imageService.uploadImage(image, idRessource));
@@ -48,14 +46,14 @@ public class ImageController {
     }
 
     @GetMapping(path = "/{id}")
-	@Operation(summary = "Récupérer une image par son id")
+	@Operation(summary = "Get an image", description = "Get an image by his id")
 	public ImageDto getImageById(@PathVariable("id") String id) {
 		log.info("Controller: Fetching Image by Id {}", id);
 		return imageService.getImageById(id);
 	}
 
 	@GetMapping("/download/{imageName:.+}")
-	@Operation(summary = "Télecharger une image")
+	@Operation(summary = "Download Image")
 	public ResponseEntity<Resource> downloadProfileImage(@PathVariable String imageName,
 			HttpServletRequest request) {
 		Resource resource = imageService.loadImageByFilename(imageName);
